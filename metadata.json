@@ -1,0 +1,7 @@
+{
+  "name": "My-Store Premium E-commerce",
+  "description": "A sophisticated, high-performance React e-commerce platform featuring AI-powered product descriptions, full cart functionality, admin dashboard, and a sleek modern UI.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
