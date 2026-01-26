@@ -50,38 +50,33 @@
           background-position: center;
         }
 
+        /* Animations */
+        .typing-text {
+            border-right: 3px solid var(--btn-glow-color);
+            white-space: nowrap;
+            overflow: hidden;
+            width: fit-content;
+            margin: 0 auto;
+            animation: typing 2.5s steps(20, end) infinite alternate;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
         /* Admin Styles */
         .product-card {
           background: var(--card-bg);
           border: 1px solid var(--card-border);
           backdrop-filter: blur(12px);
           border-radius: 1rem;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        [data-theme='light'] .product-card {
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-        }
-
         .admin-input {
           background: var(--input-bg) !important;
           border: 1px solid var(--card-border) !important;
           color: var(--theme-text) !important;
           outline: none;
-          transition: border-color 0.2s;
-        }
-
-        .admin-input:focus {
-          border-color: var(--btn-glow-color) !important;
-        }
-
-        .fade-in {
-          animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(15px); }
-          to { opacity: 1; transform: translateY(0); }
         }
 
         .btn-glow {
@@ -124,119 +119,44 @@
 
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .laser-cut-container {
-          position: relative;
-          display: inline-block;
-        }
-
+        .laser-cut-container { position: relative; display: inline-block; }
         .laser-cut-text {
-          position: relative;
-          color: transparent;
+          position: relative; color: transparent;
           -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
           background: linear-gradient(to right, #fff 0%, #fff 100%);
-          background-size: 0% 100%;
-          background-repeat: no-repeat;
-          -webkit-background-clip: text;
-          background-clip: text;
+          background-size: 0% 100%; background-repeat: no-repeat;
+          -webkit-background-clip: text; background-clip: text;
           animation: laser-text-fill 4s infinite linear;
         }
-
         .laser-beam {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 3px;
-          height: 100%;
+          position: absolute; top: 0; left: 0; width: 3px; height: 100%;
           background: var(--btn-glow-color);
-          box-shadow: 0 0 15px var(--btn-glow-color), 0 0 30px var(--btn-glow-color), 0 0 45px #fff;
-          z-index: 10;
-          animation: laser-sweep-move 4s infinite linear;
-          pointer-events: none;
+          box-shadow: 0 0 15px var(--btn-glow-color), 0 0 30px var(--btn-glow-color);
+          z-index: 10; animation: laser-sweep-move 4s infinite linear;
         }
 
-        @keyframes laser-text-fill {
-          0% { background-size: 0% 100%; }
-          70% { background-size: 100% 100%; }
-          100% { background-size: 100% 100%; }
-        }
-
-        @keyframes laser-sweep-move {
-          0% { left: 0; opacity: 0; }
-          5% { opacity: 1; }
-          65% { opacity: 1; }
-          70% { left: 100%; opacity: 0; }
-          100% { left: 100%; opacity: 0; }
-        }
+        @keyframes laser-text-fill { 0% { background-size: 0% 100%; } 70% { background-size: 100% 100%; } 100% { background-size: 100% 100%; } }
+        @keyframes laser-sweep-move { 0% { left: 0; opacity: 0; } 5% { opacity: 1; } 65% { opacity: 1; } 70% { left: 100%; opacity: 0; } 100% { left: 100%; opacity: 0; } }
 
         .secure-access-modal {
-          background: #0a0a0a;
-          border: 1.5px solid #ff0033;
-          border-radius: 2.5rem;
-          padding: 3.5rem 2.5rem;
-          width: 95%;
-          max-width: 480px;
-          text-align: center;
-          position: relative;
-          box-shadow: 0 0 60px rgba(255, 0, 51, 0.15);
+          background: #0a0a0a; border: 1.5px solid #ff0033; border-radius: 2.5rem;
+          padding: 3.5rem 2.5rem; width: 95%; max-width: 480px; text-align: center;
         }
 
-        .secure-title {
-          color: #ff0033;
-          font-size: 1.5rem;
-          font-weight: 900;
-          letter-spacing: 0.3em;
-          margin-bottom: 2.5rem;
-          text-transform: uppercase;
-        }
-
+        .secure-title { color: #ff0033; font-size: 1.5rem; font-weight: 900; letter-spacing: 0.3em; margin-bottom: 2.5rem; }
         .secure-input {
-          background: #111 !important;
-          border: 1px solid #222 !important;
-          color: #ffffff !important;
-          border-radius: 1.5rem !important;
-          padding: 1.25rem !important;
-          text-align: center;
-          font-size: 1.1rem;
-          margin-bottom: 2.5rem;
-          width: 100%;
-          outline: none;
+          background: #111 !important; border: 1px solid #222 !important; color: #ffffff !important;
+          border-radius: 1.5rem !important; padding: 1.25rem !important; text-align: center;
+          width: 100%; margin-bottom: 2.5rem;
         }
 
         .secure-confirm-btn {
-          background: #0a0a0a;
-          border: 2px solid var(--btn-glow-color);
-          border-radius: 1.5rem;
-          color: #fff;
-          font-weight: 800;
-          text-transform: uppercase;
-          padding: 1.1rem;
-          width: 100%;
-          cursor: pointer;
-          letter-spacing: 0.1em;
-          box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
-          transition: all 0.3s;
+          background: #0a0a0a; border: 2px solid var(--btn-glow-color); border-radius: 1.5rem;
+          color: #fff; font-weight: 800; padding: 1.1rem; width: 100%;
         }
 
-        .fade-move-text {
-          display: inline-block;
-          animation: fadeMove 5s infinite ease-in-out;
-        }
-
-        @keyframes fadeMove {
-          0% { opacity: 0; transform: translateX(-20px); }
-          20% { opacity: 1; transform: translateX(0); }
-          80% { opacity: 1; transform: translateX(0); }
-          100% { opacity: 0; transform: translateX(20px); }
-        }
-
-        .typing-text {
-            border-right: 3px solid var(--btn-glow-color);
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            animation: typing 2s steps(25, end) forwards;
-        }
-        @keyframes typing { from { width: 0 } to { width: 100% } }
+        .fade-move-text { display: inline-block; animation: fadeMove 5s infinite ease-in-out; }
+        @keyframes fadeMove { 0% { opacity: 0; transform: translateX(-20px); } 20% { opacity: 1; transform: translateX(0); } 80% { opacity: 1; transform: translateX(0); } 100% { opacity: 0; transform: translateX(20px); } }
     </style>
     <script type="importmap">
 {
