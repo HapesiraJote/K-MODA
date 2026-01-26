@@ -23,7 +23,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ 
-  children, cart, user, isCartOpen, setCartOpen, removeFromCart, brandName, brandLogo, categories,
+  children, cart, user, onLogout, isCartOpen, setCartOpen, removeFromCart, brandName, brandLogo, categories,
   bannerText, bannerBg, bannerTextColor, accentColor, theme, onToggleTheme, onOpenAdmin
 }) => {
   const [isCatMenuOpen, setCatMenuOpen] = useState(false);
@@ -42,7 +42,7 @@ const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div className="min-h-screen flex flex-col relative">
-      {/* Banneri lart - Ngjyrë hiri e mbyllt */}
+      {/* Banneri lart */}
       <div 
         className="py-2 text-[10px] font-black uppercase tracking-[0.3em] text-center overflow-hidden h-9 flex items-center justify-center border-b border-black/10"
         style={{ backgroundColor: bannerBg, color: bannerTextColor }}
@@ -50,11 +50,10 @@ const Layout: React.FC<LayoutProps> = ({
         <span className="fade-move-text">{bannerText}</span>
       </div>
 
-      {/* Header & Navigimi i Integruar - "Drejt" dhe me Ikona */}
+      {/* Header */}
       <header className="sticky top-0 z-[60] bg-white text-black border-b shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-24 md:h-28">
           
-          {/* Logo majtas */}
           <Link to="/" className="flex items-center shrink-0">
             {brandLogo ? (
               <img src={brandLogo} alt={brandName} className="h-20 md:h-24 w-auto object-contain hover:scale-105 transition-transform duration-300" />
@@ -63,7 +62,6 @@ const Layout: React.FC<LayoutProps> = ({
             )}
           </Link>
 
-          {/* Navigimi Qendror me Ikona */}
           <nav className="hidden md:flex items-center space-x-8 font-black text-[11px] uppercase tracking-widest">
             <Link to="/" className="flex items-center gap-2 hover:opacity-60 transition-opacity">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
@@ -82,20 +80,32 @@ const Layout: React.FC<LayoutProps> = ({
             </button>
           </nav>
 
-          {/* Veglat djathtas (User, Cart, Admin) */}
           <div className="flex items-center space-x-6">
             <button onClick={onToggleTheme} className="p-2 hover:scale-110 transition-transform">
               {theme === 'dark' ? <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg> : <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>}
             </button>
-            <Link to="/login" className="hover:scale-110 transition-transform"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></Link>
+            
+            {user?.isAdmin && (
+              <Link to="/admin" className="p-2 bg-purple-100 text-purple-600 rounded-lg hover:scale-110 transition-transform">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </Link>
+            )}
+
+            <Link to="/login" className="hover:scale-110 transition-transform">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </Link>
+
             <button onClick={() => setCartOpen(true)} className="relative hover:scale-110 transition-transform">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
               {cart.length > 0 && <span className="absolute -top-2 -right-2 text-white text-[9px] w-5 h-5 rounded-full flex items-center justify-center font-bold" style={{ backgroundColor: accentColor }}>{cart.length}</span>}
             </button>
+
+            {user && (
+              <button onClick={onLogout} className="text-[10px] font-black uppercase text-gray-400 hover:text-red-500">Dalje</button>
+            )}
           </div>
         </div>
 
-        {/* Menuja e Kategorive (Dropdown) */}
         {isCatMenuOpen && (
           <div className="absolute top-full left-0 w-full bg-white text-black shadow-2xl border-t z-[100] animate-in slide-in-from-top duration-200">
             <div className="max-w-7xl mx-auto p-8 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -107,7 +117,7 @@ const Layout: React.FC<LayoutProps> = ({
         )}
       </header>
 
-      {/* Navigimi Mobile */}
+      {/* Mobile Nav */}
       <div className="md:hidden flex justify-around bg-white py-3 border-b border-gray-100 font-black text-[9px] uppercase tracking-widest text-black sticky top-[132px] z-[55]">
         <Link to="/" className="flex flex-col items-center gap-1">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
@@ -117,10 +127,12 @@ const Layout: React.FC<LayoutProps> = ({
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
           Dyqani
         </Link>
-        <button onClick={() => setCatMenuOpen(!isCatMenuOpen)} className="flex flex-col items-center gap-1 uppercase">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          Menu
-        </button>
+        {user?.isAdmin && (
+           <Link to="/admin" className="flex flex-col items-center gap-1">
+            <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Admin
+          </Link>
+        )}
       </div>
 
       <main className="flex-grow z-10">{children}</main>
