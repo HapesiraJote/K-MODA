@@ -17,11 +17,17 @@
           --btn-text-color: #ffffff;
           --theme-bg: #000000;
           --theme-text: #ffffff;
+          --card-bg: rgba(255, 255, 255, 0.03);
+          --card-border: rgba(255, 255, 255, 0.08);
+          --input-bg: rgba(255, 255, 255, 0.05);
         }
 
         [data-theme='light'] {
           --theme-bg: #f8fafc;
           --theme-text: #0f172a;
+          --card-bg: #ffffff;
+          --card-border: #e2e8f0;
+          --input-bg: #f1f5f9;
         }
 
         body { 
@@ -30,7 +36,7 @@
           color: var(--theme-text); 
           font-family: 'Inter', sans-serif; 
           overflow-x: hidden; 
-          transition: background 0.3s ease, color 0.3s ease;
+          transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s ease;
         }
         
         #panel {
@@ -44,18 +50,38 @@
           background-position: center;
         }
 
-        /* Global fix for input visibility as requested */
-        input:not(.secure-input), 
-        textarea, 
-        select {
-          color: #000000 !important;
-          background-color: #ffffff !important;
+        /* Admin Styles */
+        .product-card {
+          background: var(--card-bg);
+          border: 1px solid var(--card-border);
+          backdrop-filter: blur(12px);
+          border-radius: 1rem;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        [data-theme='light'] .product-card {
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
         }
 
         .admin-input {
-          background-color: #ffffff !important;
-          color: #000000 !important;
-          border: 1px solid rgba(0,0,0,0.1) !important;
+          background: var(--input-bg) !important;
+          border: 1px solid var(--card-border) !important;
+          color: var(--theme-text) !important;
+          outline: none;
+          transition: border-color 0.2s;
+        }
+
+        .admin-input:focus {
+          border-color: var(--btn-glow-color) !important;
+        }
+
+        .fade-in {
+          animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(15px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         .btn-glow {
@@ -74,7 +100,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
         }
         
         .btn-glow::before {
@@ -98,7 +124,6 @@
 
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* Laser Cut Animation Styles */
         .laser-cut-container {
           position: relative;
           display: inline-block;
@@ -143,7 +168,6 @@
           100% { left: 100%; opacity: 0; }
         }
 
-        /* Secure Access Styling */
         .secure-access-modal {
           background: #0a0a0a;
           border: 1.5px solid #ff0033;
@@ -180,7 +204,7 @@
 
         .secure-confirm-btn {
           background: #0a0a0a;
-          border: 2px solid #a855f7;
+          border: 2px solid var(--btn-glow-color);
           border-radius: 1.5rem;
           color: #fff;
           font-weight: 800;
@@ -210,29 +234,30 @@
             white-space: nowrap;
             overflow: hidden;
             width: 0;
-            animation: typing 2s steps(15, end) forwards;
+            animation: typing 2s steps(25, end) forwards;
         }
         @keyframes typing { from { width: 0 } to { width: 100% } }
     </style>
     <script type="importmap">
-    {
-      "imports": {
-        "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
-        "react/": "https://esm.sh/react@^19.2.3/",
-        "react": "https://esm.sh/react@^19.2.3",
-        "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
-        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-        "firebase/": "https://esm.sh/firebase@^12.8.0/"
-      }
-    }
-    </script>
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
+    "firebase/app": "https://esm.sh/firebase@^12.8.0/app",
+    "firebase/firestore": "https://esm.sh/firebase@^12.8.0/firestore",
+    "firebase/auth": "https://esm.sh/firebase@^12.8.0/auth",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "firebase/": "https://esm.sh/firebase@^12.8.0/"
+  }
+}
+</script>
 </head>
 <body>
-  <div id="panel"></div>
-  <div id="root"></div>
-
- <script type="module" src="./index.tsx"></script> në fund të
+    <div id="panel"></div>
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
 </body>
-</html>
-
 </html>
