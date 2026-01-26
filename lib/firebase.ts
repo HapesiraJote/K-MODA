@@ -1,7 +1,7 @@
 
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, query, orderBy } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA2Go2Gdi3cl0ybryv8bDfXR_3V9UJrBTg",
@@ -17,5 +17,8 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
+// Export Firestore methods to be used by other components
+export { onSnapshot, addDoc, deleteDoc, doc, query, orderBy };
+
 // Helper functions for Firestore
-export const productsCol = collection(db, "produket");
+export const productsCol = collection(db, 'produket');
