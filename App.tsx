@@ -54,7 +54,7 @@ const LoadingScreen = ({ brand, color }: { brand: string, color: string }) => (
       {brand}
     </div>
     <div className="text-xl font-black uppercase tracking-[0.5em] text-white">
-      <div className="typing-text">Zbuloni K-MODA</div>
+      <div className="typing-text">Mirë se vini në K-MODA</div>
     </div>
   </div>
 );
@@ -65,7 +65,7 @@ const App: React.FC = () => {
   const [isAdminModalOpen, setAdminModalOpen] = useState(false);
   
   const [brandName, setBrandName] = useState(() => localStorage.getItem('brandName') || 'K-MODA');
-  const [logo, setLogo] = useState(() => localStorage.getItem('brandLogo') || 'https://i.ibb.co/rRc78Nn6/Gemini-Generated-Image-7t1c4c7t1c4c7t1c.png');
+  const [logo, setLogo] = useState(() => localStorage.getItem('brandLogo') || 'https://i.ibb.co/FkQfQz54/Gemini-Generated-Image-7t1c4c7t1c4c7t1c-removebg-preview.png');
   const [theme, setTheme] = useState<'light' | 'dark'>(() => (localStorage.getItem('theme') as any) || 'dark');
   const [categories, setCategories] = useState<string[]>(() => {
     const saved = localStorage.getItem('categories');
@@ -73,7 +73,7 @@ const App: React.FC = () => {
   });
   
   const [bannerText, setBannerText] = useState(() => localStorage.getItem('bannerText') || 'K-MODA | STILI QË JU PËRFAQËSON');
-  const [bannerBg, setBannerBg] = useState(() => localStorage.getItem('bannerBg') || '#000000');
+  const [bannerBg, setBannerBg] = useState(() => localStorage.getItem('bannerBg') || '#2c2c2c');
   const [bannerTextColor, setBannerTextColor] = useState(() => localStorage.getItem('bannerTextColor') || '#ffffff');
   const [btnGlowColor, setBtnGlowColor] = useState(() => localStorage.getItem('btnGlowColor') || '#a855f7');
   const [btnTextColor, setBtnTextColor] = useState(() => localStorage.getItem('btnTextColor') || '#ffffff');

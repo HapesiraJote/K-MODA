@@ -44,6 +44,20 @@
           background-position: center;
         }
 
+        /* Global fix for input visibility as requested */
+        input:not(.secure-input), 
+        textarea, 
+        select {
+          color: #000000 !important;
+          background-color: #ffffff !important;
+        }
+
+        .admin-input {
+          background-color: #ffffff !important;
+          color: #000000 !important;
+          border: 1px solid rgba(0,0,0,0.1) !important;
+        }
+
         .btn-glow {
             position: relative;
             padding: 12px 32px;
@@ -84,10 +98,55 @@
 
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* Secure Access Styling based on user image */
+        /* Laser Cut Animation Styles */
+        .laser-cut-container {
+          position: relative;
+          display: inline-block;
+        }
+
+        .laser-cut-text {
+          position: relative;
+          color: transparent;
+          -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+          background: linear-gradient(to right, #fff 0%, #fff 100%);
+          background-size: 0% 100%;
+          background-repeat: no-repeat;
+          -webkit-background-clip: text;
+          background-clip: text;
+          animation: laser-text-fill 4s infinite linear;
+        }
+
+        .laser-beam {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 3px;
+          height: 100%;
+          background: var(--btn-glow-color);
+          box-shadow: 0 0 15px var(--btn-glow-color), 0 0 30px var(--btn-glow-color), 0 0 45px #fff;
+          z-index: 10;
+          animation: laser-sweep-move 4s infinite linear;
+          pointer-events: none;
+        }
+
+        @keyframes laser-text-fill {
+          0% { background-size: 0% 100%; }
+          70% { background-size: 100% 100%; }
+          100% { background-size: 100% 100%; }
+        }
+
+        @keyframes laser-sweep-move {
+          0% { left: 0; opacity: 0; }
+          5% { opacity: 1; }
+          65% { opacity: 1; }
+          70% { left: 100%; opacity: 0; }
+          100% { left: 100%; opacity: 0; }
+        }
+
+        /* Secure Access Styling */
         .secure-access-modal {
           background: #0a0a0a;
-          border: 1.5px solid #ff0033; /* Red border from image */
+          border: 1.5px solid #ff0033;
           border-radius: 2.5rem;
           padding: 3.5rem 2.5rem;
           width: 95%;
@@ -109,7 +168,7 @@
         .secure-input {
           background: #111 !important;
           border: 1px solid #222 !important;
-          color: #888 !important;
+          color: #ffffff !important;
           border-radius: 1.5rem !important;
           padding: 1.25rem !important;
           text-align: center;
@@ -132,25 +191,6 @@
           letter-spacing: 0.1em;
           box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
           transition: all 0.3s;
-        }
-
-        .secure-confirm-btn:hover {
-          box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
-          transform: scale(1.02);
-        }
-
-        .secure-cancel {
-          color: #4b5563;
-          font-weight: 600;
-          margin-top: 1.5rem;
-          display: block;
-          cursor: pointer;
-          font-size: 0.9rem;
-          transition: color 0.2s;
-        }
-        
-        .secure-cancel:hover {
-          color: #9ca3af;
         }
 
         .fade-move-text {
