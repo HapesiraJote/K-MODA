@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MIRË SE VINI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --led-blue: #00f2ff;
+            --wa-green: #25D366;
+            --mint-blue: #00ffcc;
+            --silver: linear-gradient(180deg, #ffffff 0%, #a5a5a5 100%);
+            --call-color: #ff3333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #000; overflow-x: hidden; font-family: 'Orbitron', sans-serif; color: white; scroll-behavior: smooth; }
+
+        /* --- LOADING SCREEN (VIDEO RIKTHYER) --- */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10000; display: flex; justify-content: center; align-items: center;
+            background: black; transition: opacity 1.2s ease;
+        }
+        .loader-video-bg { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        .welcome-text { position: relative; font-size: clamp(1.5rem, 7vw, 2.5rem); letter-spacing: 5px; z-index: 10; text-align: center; animation: softFade 2s infinite; }
+
+        /* --- BACKGROUND VIDEO --- */
+        .bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .bg-video { width: 100%; height: 100%; object-fit: cover; }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); }
+
+        /* --- CALL NOW TOP RIGHT --- */
+        .call-now-fixed {
+            position: fixed; top: 20px; right: 20px; z-index: 1001;
+            background: var(--call-color); color: white; padding: 12px 20px;
+            border-radius: 50px; text-decoration: none; font-weight: 900;
+            font-size: 0.8rem; box-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
+
+        /* Hapësira që aeroplani të shihet lirshëm në telefon */
+        .hero-section {
+            height: 65vh; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 20px;
+        }
+        
+        .logo { width: clamp(140px, 40vw, 220px); filter: drop-shadow(0 0 15px rgba(255,255,255,0.3)); margin-bottom: 20px; }
+
+        .fade-title {
+            font-size: clamp(0.9rem, 4.5vw, 1.8rem); font-weight: 900; text-transform: uppercase;
+            background: var(--silver); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: softFade 4s infinite ease-in-out; line-height: 1.4;
+        }
+
+        /* --- BUTTONS SECTION (Tani fillojnë më poshtë) --- */
+        .content-block {
+            width: 100%; padding: 40px 15px;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.9) 15%);
+        }
+
+        .btn-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 40px;
+            width: 100%; max-width: 1000px; margin: 0 auto 60px auto;
+        }
+
+        .flight-btn {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: 1px solid var(--led-blue);
+            padding: 18px 25px; border-radius: 50px; color: white; text-decoration: none; font-weight: 700;
+            font-size: clamp(0.7rem, 2.5vw, 0.85rem); transition: 0.3s;
+        }
+
+        .flight-btn:hover { background: rgba(0, 242, 255, 0.2); box-shadow: 0 0 20px var(--led-blue); transform: translateY(-3px); }
+
+        /* --- WHATSAPP ICON --- */
+        .wa-icon {
+            width: 35px; height: 35px; background: var(--wa-green); display: flex;
+            justify-content: center; align-items: center; border-radius: 50%;
+            font-size: 1.1rem; animation: glowMint 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes glowMint {
+            0% { background: var(--wa-green); box-shadow: 0 0 10px var(--wa-green); color: white; }
+            100% { background: var(--mint-blue); box-shadow: 0 0 15px var(--mint-blue); color: #003322; }
+        }
+
+        /* --- SERVICES --- */
+        .services-section {
+            width: 100%; max-width: 1100px; margin: 0 auto 50px auto;
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px; padding: 40px 20px; backdrop-filter: blur(10px);
+        }
+
+        .services-header { text-align: center; margin-bottom: 40px; font-size: clamp(1rem, 4vw, 1.3rem); color: var(--led-blue); text-transform: uppercase; letter-spacing: 3px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
+        .service-card { background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 20px; text-align: center; transition: 0.3s; }
+        .service-card i { font-size: 2.2rem; color: var(--mint-blue); margin-bottom: 15px; }
+        .service-card h3 { font-size: 0.8rem; text-transform: uppercase; }
+
+        @keyframes softFade {
+            0%, 100% { opacity: 0.3; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 900px) {
+            .hero-section { height: 60vh; } 
+            .btn-grid { grid-template-columns: 1fr; gap: 15px; }
+            .call-now-fixed { top: 10px; right: 10px; padding: 10px 15px; font-size: 0.7rem; }
+            .main-content { padding-top: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <video class="loader-video-bg" autoplay muted loop playsinline>
+            <source src="https://cdn.pixabay.com/video/2020/02/27/32945-395456395_medium.mp4" type="video/mp4">
+        </video>
+        <h1 class="welcome-text">MIRË SE VINI</h1>
+    </div>
+
+    <a href="tel:+38345627222" class="call-now-fixed"><i class="fas fa-phone-alt"></i> THIRRË TANI</a>
+
+    <div class="bg-container">
+        <div class="overlay"></div>
+        <video class="bg-video" autoplay muted loop playsinline webkit-playsinline>
+            <source src="https://cdn.pixabay.com/video/2020/02/27/32945-395456395_medium.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <img src="https://i.ibb.co/fYmJZYyb/IMG-5454.png" alt="Logo" class="logo">
+            <div class="title-box">
+                <h2 class="fade-title">FLUTURIMË DIREKTË NGA PRISHTINA<br>DHE ANASJELLTAS</h2>
+            </div>
+        </section>
+
+        <section class="content-block">
+            <div class="btn-grid" id="dest-grid"></div>
+
+            <div class="services-section">
+                <h2 class="services-header">SHËRBIMET TONA</h2>
+                <div class="services-grid">
+                    <div class="service-card"><i class="fas fa-ticket-alt"></i><h3>Bileta Avioni</h3></div>
+                    <div class="service-card"><i class="fas fa-file-signature"></i><h3>Formularë</h3></div>
+                    <div class="service-card"><i class="fas fa-hotel"></i><h3>Rezervime Hotele</h3></div>
+                    <div class="service-card"><i class="fas fa-hand-holding-medical"></i><h3>Rezervime Mjekësore</h3></div>
+                    <div class="service-card"><i class="fas fa-language"></i><h3>Përkthime Profesionale</h3></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const cities = ["Dusseldorf", "Munich", "Stuttgart", "Berlin", "Hannover", "Zurich", "Frankfurt", "Bassel", "Dortmund", "Geneva", "Hamburg", "Vienna"];
+        const grid = document.getElementById('dest-grid');
+        const phone = "38344326458";
+
+        cities.forEach(city => {
+            const a = document.createElement('a');
+            a.className = 'flight-btn';
+            a.href = `https://wa.me/${phone}?text=Dua%20rezervim%20per%20${city}`;
+            a.target = "_blank";
+            a.innerHTML = `<span>PRISHTINË ✈ ${city.toUpperCase()}</span><div class="wa-icon"><i class="fab fa-whatsapp"></i></div>`;
+            grid.appendChild(a);
+        });
+
+        window.onload = () => {
+            setTimeout(() => {
+                const l = document.getElementById('loader');
+                if(l) {
+                    l.style.opacity = '0';
+                    setTimeout(() => l.style.display = 'none', 1200);
+                }
+            }, 3000);
+        };
+    </script>
+</body>
+</html>
